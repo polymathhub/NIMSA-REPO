@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NIMSA-HCTF Medical Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+    }
+    .hero-bg {
+      background-size: cover;
+      background-position: center;
+      animation: slideshow 30s infinite linear;
+    }
+    @keyframes slideshow {
+      0%   { background-image: url('https://img.freepik.com/free-photo/senior-doctor-with-stethoscope-hospital_1303-17848.jpg'); }
+      33%  { background-image: url('https://i.pinimg.com/1200x/69/0a/ed/690aed3d40b81896e4c58acda6f6a657.jpg'); }
+      66%  { background-image: url('https://i.pinimg.com/1200x/ba/d5/6a/bad56ac7fd7d46ff19f460e20d440f16.jpg'); }
+      100% { background-image: url('https://i.pinimg.com/1200x/0c/f6/b9/0cf6b9cb2199a76cfade19b96d33f972.jpg'); }
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+
+<nav class="bg-white shadow-md sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold text-blue-700">NIMSA</h1>
+    <button class="md:hidden text-gray-700" id="menu-btn">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+    <ul id="nav-links" class="hidden md:flex space-x-6 text-sm font-medium text-gray-700">
+      <li><a href="#home" class="hover:text-blue-600">Home</a></li>
+      <li><a href="#register" class="hover:text-blue-600">Register</a></li>
+      <li><a href="#about" class="hover:text-blue-600">About</a></li>
+      <li><a href="#contact" class="hover:text-blue-600">Contact</a></li>
+    </ul>
+  </div>
+  <div id="mobile-menu" class="md:hidden hidden px-4 pb-4">
+    <a href="#home" class="block py-2 text-gray-700 hover:text-blue-600">Home</a>
+    <a href="#register" class="block py-2 text-gray-700 hover:text-blue-600">Register</a>
+    <a href="#about" class="block py-2 text-gray-700 hover:text-blue-600">About</a>
+    <a href="#contact" class="block py-2 text-gray-700 hover:text-blue-600">Contact</a>
+  </div>
+</nav>
+
+
+<section id="home" class="hero-bg text-white py-20 px-4">
+  <div class="max-w-7xl mx-auto text-center">
+    <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-4">NIMSA-Health care trust fund</h1>
+    <p class="text-lg mb-6 max-w-xl mx-auto">NIMSA Health care trust fund provides the best medical student networking and support nationwide. Register now to connect and grow.</p>
+    <div class="space-x-4">
+      <a href="#register" class="bg-teal-500 hover:bg-teal-600 px-6 py-3 rounded text-white font-semibold">Register</a>
+      <a href="#about" class="bg-white text-teal-600 hover:bg-teal-100 px-6 py-3 rounded font-semibold">Learn More</a>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-8 text-center">
+    <div>
+      <img src="https://i.pinimg.com/1200x/f3/f1/ba/f3f1ba481c488b85e04e93fd09380390.jpg">
+      <h3 class="text-xl font-bold mb-2">Specialised Therapy</h3>
+      <p class="text-gray-600">Access to academic and professional medical support services for all levels.</p>
+    </div>
+    <div>
+      <img src="https://i.pinimg.com/1200x/9c/9c/fd/9c9cfdce225762b864177d2265e6e90b.jpg">
+      <h3 class="text-xl font-bold mb-2">Diagnosis & Networking</h3>
+      <p class="text-gray-600">Grow with mentorship, seminars and NIMSA's medical student directory.</p>
+    </div>
+    <div>
+      <img src="https://i.pinimg.com/1200x/18/76/f6/1876f651cc016c1161748596fe488a77.jpg">
+      <h3 class="text-xl font-bold mb-2">Support Services</h3>
+      <p class="text-black-600">Register and gain access to ID verification, educational resources and more.</p>
+    </div>
+  </div>
+</section>
+
+<section id="register" class="bg-blue-50 py-16">
+  <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-8">
+    <h2 class="text-2xl font-bold text-center text-blue-800 mb-4">NIMSA Registration Form</h2>
+    <p class="text-center text-gray-600 mb-6">All fields are required to complete registration</p>
+    <form id="nimsaForm" class="space-y-4">
+      <input name="name" placeholder="Full Name" required class="w-full border border-gray-300 rounded p-3" />
+      <input name="email" type="email" placeholder="Email" required class="w-full border border-gray-300 rounded p-3" />
+      <input name="school" placeholder="Medical School" required class="w-full border border-gray-300 rounded p-3" />
+      <input name="matric" placeholder="Matric Number" required class="w-full border border-gray-300 rounded p-3" />
+      <input name="year" placeholder="Year of Study" required class="w-full border border-gray-300 rounded p-3" />
+      <input name="password" type="password" placeholder="Create Password" required class="w-full border border-gray-300 rounded p-3" />
+      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded transition">
+        Register
+      </button>
+    </form>
+  </div>
+</section>
+
+<section id="contact" class="py-10 bg-white text-center">
+  <h2 class="text-2xl font-bold text-blue-700 mb-2">Get in Touch</h2>
+  <p class="text-gray-600">You can reach out to our support team at: hctfnimsa@gmail.com </p>
+</section>
+
+<footer class="bg-gray-900 text-white text-center py-6 mt-12">
+  <p>&copy; 2025 NIMSA-HCTF TEAM | All rights reserved.</p>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = "https://oidxbltgfgjkpqcqhzyz.supabase.co"; 
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9pZHhibHRnZmdqa3BxY3Foenl6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU3ODU4MDQsImV4cCI6MjA3MTM2MTgwNH0.TldyPtRbsaqJ62MITi5wXQQdgXS0Ra3ZEV8_wIlpho8"; 
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const form = document.getElementById("nimsaForm");
+
+  function generateCode(name, matric) {
+    const n = name.replace(/\s+/g, '').toUpperCase();
+    const m = matric.replace(/\s+/g, '').toUpperCase();
+    const rand = Math.random().toString(36).substring(2, 5).toUpperCase();
+    return `${n.slice(0, 3)}${m.slice(0, 3)}${rand}`;
+  }
+
+  form.addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+    const school = form.school.value.trim();
+    const matric = form.matric.value.trim();
+    const year = form.year.value.trim();
+    const password = form.password.value;
+    const code = generateCode(name, matric);
+
+    const { data, error } = await supabaseClient
+      .from('registrations')
+      .insert([{ name, email, school, matric, year, password, code }]);
+
+    if (error) {
+      alert("Error: " + error.message);
+      console.error(error);
+    } else {
+      window.location.href = `confirmation.html?code=${code}`;
+    }
+  });
+</script>
+
+</body>
+</html>
