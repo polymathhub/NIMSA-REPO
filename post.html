@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog Post | NIMSA-HCTF</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+    }
+    /* Loader animation */
+    #loader {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      z-index: 50;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    .spinner {
+      border: 4px solid #e5e7eb;
+      border-top: 4px solid #2563eb;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+
+<!-- Loader -->
+<div id="loader">
+  <div class="spinner"></div>
+</div>
+
+<nav class="bg-white shadow-md sticky top-0 z-40">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold text-blue-700"><a href="index.html">NIMSA</a></h1>
+    <a href="index.html#blog" class="text-gray-600 hover:text-blue-600">← Back to Blog</a>
+  </div>
+</nav>
+
+<!-- Blog Content -->
+<main class="max-w-4xl mx-auto px-6 py-12">
+  <article id="post" class="bg-white rounded-2xl shadow-lg overflow-hidden">
+    <!-- Content injected via JS -->
+  </article>
+</main>
+
+<footer class="bg-gray-900 text-white text-center py-6 mt-12">
+  <p>&copy; 2025 NIMSA-HCTF TEAM | All rights reserved.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = "https://oidxbltgfgjkpqcqhzyz.supabase.co"; 
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9pZHhibHRnZmdqa3BxY3Foenl6eiIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNzU1Nzg1ODA0LCJleHAiOjIwNzEzNjE4MDR9.TldyPtRbsaqJ62MITi5wXQQdgXS0Ra3ZEV8_wIlpho8"; 
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // Get slug from URL
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get("slug");
+
+  async function loadPost() {
+    if (!slug) return;
+
+    const { data: post, error } = await supabaseClient
+      .from("posts")
+      .select("*")
+      .eq("slug", slug)
+      .single();
+
+    const container = document.getElementById("post");
+    const loader = document.getElementById("loader");
+
+    if (error || !post) {
+      container.innerHTML = `
+        <div class="p-8 text-center">
+          <h2 class="text-2xl font-bold text-red-600">Post not found</h2>
+          <p class="text-gray-600 mt-2">The blog post you are looking for does not exist.</p>
+        </div>`;
+      loader.style.opacity = "0";
+      loader.style.visibility = "hidden";
+      return;
+    }
+
+    container.innerHTML = `
+      ${post.image_url ? `<img src="${post.image_url}" alt="${post.title}" class="w-full h-80 object-cover">` : ""}
+      <div class="p-8">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">${post.title}</h1>
+        <p class="text-gray-500 text-sm mb-6">Published on ${new Date(post.created_at).toLocaleDateString()}</p>
+        <div class="prose max-w-none text-gray-700 leading-relaxed">
+          ${post.content.replace(/\n/g, "<br><br>")}
+        </div>
+      </div>
+    `;
+
+    // Hide loader
+    loader.style.opacity = "0";
+    loader.style.visibility = "hidden";
+  }
+
+  loadPost();
+</script>
+
+</body>
+</html>
