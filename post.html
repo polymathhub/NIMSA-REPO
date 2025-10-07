@@ -54,6 +54,9 @@
 <main class="max-w-4xl mx-auto px-6 py-12">
   <article id="post" class="bg-white rounded-2xl shadow-lg overflow-hidden">
     <!-- Content injected via JS -->
+    <div class="p-8 text-center text-gray-500">
+      <p>Loading post...</p>
+    </div>
   </article>
 </main>
 
@@ -64,7 +67,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
   const SUPABASE_URL = "https://oidxbltgfgjkpqcqhzyz.supabase.co"; 
-  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9pZHhibHRnZmdqa3BxY3Foenl6eiIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNzU1Nzg1ODA0LCJleHAiOjIwNzEzNjE4MDR9.TldyPtRbsaqJ62MITi5wXQQdgXS0Ra3ZEV8_wIlpho8"; 
+  const SUPABASE_ANON_KEY ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9pZHhibHRnZmdqa3BxY3Foenl6eiIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNzU1Nzg1ODA0LCJleHAiOjIwNzEzNjE4MDR9.TldyPtRbsaqJ62MITi5wXQQdgXS0Ra3ZEV8_wIlpho8" ; 
   const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   // Get slug from URL
@@ -72,7 +75,19 @@
   const slug = params.get("slug");
 
   async function loadPost() {
-    if (!slug) return;
+    const container = document.getElementById("post");
+    const loader = document.getElementById("loader");
+
+    if (!slug) {
+      container.innerHTML = `
+        <div class="p-8 text-center">
+          <h2 class="text-2xl font-bold text-red-600">No post selected</h2>
+          <p class="text-gray-600 mt-2">Please go back and choose a blog post.</p>
+        </div>`;
+      loader.style.opacity = "0";
+      loader.style.visibility = "hidden";
+      return;
+    }
 
     const { data: post, error } = await supabaseClient
       .from("posts")
@@ -80,30 +95,24 @@
       .eq("slug", slug)
       .single();
 
-    const container = document.getElementById("post");
-    const loader = document.getElementById("loader");
-
     if (error || !post) {
       container.innerHTML = `
         <div class="p-8 text-center">
           <h2 class="text-2xl font-bold text-red-600">Post not found</h2>
           <p class="text-gray-600 mt-2">The blog post you are looking for does not exist.</p>
         </div>`;
-      loader.style.opacity = "0";
-      loader.style.visibility = "hidden";
-      return;
-    }
-
-    container.innerHTML = `
-      ${post.image_url ? `<img src="${post.image_url}" alt="${post.title}" class="w-full h-80 object-cover">` : ""}
-      <div class="p-8">
-        <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">${post.title}</h1>
-        <p class="text-gray-500 text-sm mb-6">Published on ${new Date(post.created_at).toLocaleDateString()}</p>
-        <div class="prose max-w-none text-gray-700 leading-relaxed">
-          ${post.content.replace(/\n/g, "<br><br>")}
+    } else {
+      container.innerHTML = `
+        ${post.image_url ? `<img src="${post.image_url}" alt="${post.title}" class="w-full h-80 object-cover">` : ""}
+        <div class="p-8">
+          <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">${post.title}</h1>
+          <p class="text-gray-500 text-sm mb-6">Published on ${new Date(post.created_at).toLocaleDateString()}</p>
+          <div class="prose max-w-none text-gray-700 leading-relaxed">
+            ${post.content.replace(/\n/g, "<br><br>")}
+          </div>
         </div>
-      </div>
-    `;
+      `;
+    }
 
     // Hide loader
     loader.style.opacity = "0";
