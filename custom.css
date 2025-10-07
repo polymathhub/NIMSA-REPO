@@ -1,0 +1,95 @@
+/* ===== custom.css ===== */
+
+/* Global smooth transitions */
+a, button, input, textarea {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Navbar */
+#nav-links a {
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
+  font-weight: 500;
+}
+#nav-links a:hover {
+  background: linear-gradient(90deg, rgba(59,130,246,0.15), rgba(20,184,166,0.15));
+  color: #1d4ed8; /* Tailwind blue-700 */
+}
+
+/* Hero section */
+.hero-bg {
+  position: relative;
+  overflow: hidden;
+}
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35); /* dark overlay for readability */
+}
+.hero-bg h1, .hero-bg p {
+  position: relative;
+  text-shadow: 0 3px 8px rgba(0,0,0,0.6);
+}
+
+/* Buttons */
+a.bg-teal-500, a.bg-white, button.bg-blue-600 {
+  border-radius: 0.75rem;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+a.bg-teal-500:hover, a.bg-white:hover, button.bg-blue-600:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+/* About section cards */
+#about div {
+  border-radius: 0.75rem;
+  background: #ffffff;
+  padding: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+#about div:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.15);
+}
+
+/* Registration form */
+#nimsaForm input {
+  border-radius: 0.5rem;
+  border: 1px solid #d1d5db; /* Tailwind gray-300 */
+  padding: 0.75rem;
+}
+#nimsaForm input:focus {
+  border-color: #2563eb; /* Tailwind blue-600 */
+  box-shadow: 0 0 0 4px rgba(37,99,235,0.25);
+  outline: none;
+}
+
+/* Blog cards */
+#blog-container article {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+#blog-container article:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+}
+#blog-container img {
+  transition: transform 0.4s ease;
+}
+#blog-container article:hover img {
+  transform: scale(1.05);
+}
+
+/* Footer */
+footer {
+  letter-spacing: 0.5px;
+  background: linear-gradient(90deg, #1e3a8a, #0f766e); /* blue → teal */
+}
+footer a:hover {
+  text-decoration: underline;
+}
